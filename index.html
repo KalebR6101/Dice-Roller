@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="rollDice()">
+
+    <header>
+        <h1>Dice Roller</h1>
+        <p>Roll five 6-sided dice for your game</p>
+    </header>
+
+    <main>
+        <section class="instructions">
+            <h2>How to Use</h2>
+            <p>Click the "Roll Dice" button or press Enter to roll five dice. Dice values are automatically generated each roll.</p>
+        </section>
+
+        <section class="dice-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Die 1</th>
+                        <th>Die 2</th>
+                        <th>Die 3</th>
+                        <th>Die 4</th>
+                        <th>Die 5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="die1" readonly></td>
+                        <td><input type="text" id="die2" readonly></td>
+                        <td><input type="text" id="die3" readonly></td>
+                        <td><input type="text" id="die4" readonly></td>
+                        <td><input type="text" id="die5" readonly></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button id="rollButton" onclick="rollDice()" autofocus>Roll Dice</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Kaleb Richardson</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
