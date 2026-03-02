@@ -1,35 +1,37 @@
 // script.js
 
-// Function to roll the dice
+// Function to roll five dice
 async function rollDice() {
   try {
-    // Fetch from your Azure Node backend
-    const response = await fetch(
-      "https://web-dice-node-awgqftcadtajdyhz.canadacentral-01.azurewebsites.net/roll"
-    );
+    // Loop to fetch each die from backend
+    for (let i = 1; i <= 5; i++) {
+      const response = await fetch(
+        "https://web-dice-node-awgqftcadtajdyhz.canadacentral-01.azurewebsites.net/roll"
+      );
 
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Update the corresponding dice input box
+      document.getElementById(`die${i}`).value = data.dice;
+
+      // Log each die roll
+      console.log(`Die ${i} rolled: ${data.dice}`);
     }
-
-    const data = await response.json();
-
-    // Display the dice result on the page
-    const resultElement = document.getElementById("diceResult");
-    resultElement.textContent = `🎲 You rolled: ${data.dice}`;
   } catch (err) {
     console.error("Error fetching dice:", err);
-
-    // Display error message for the user
-    const resultElement = document.getElementById("diceResult");
-    resultElement.textContent = "❌ Failed to roll dice. Check console.";
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById(`die${i}`).value = "ERR";
+    }
   }
 }
 
-// Attach event listener to the Roll Dice button
-document.getElementById("rollButton").addEventListener("click", rollDice);
-
+// Function to wake up backend
 async function wakeUpBackend() {
+  console.log("Trying to wake up backend...");
   try {
     const response = await fetch(
       "https://web-dice-node-awgqftcadtajdyhz.canadacentral-01.azurewebsites.net/roll"
@@ -47,3 +49,11 @@ async function wakeUpBackend() {
 
 // Wake up backend immediately when page loads
 wakeUpBackend();
+
+// Allow pressing Enter to roll dice
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") rollDice();
+});
+
+// Attach event listener to Roll Dice button
+document.getElementById("rollButton").addEventListener("click", rollDice);
