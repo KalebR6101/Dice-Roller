@@ -3,7 +3,6 @@
 // Function to roll five dice
 async function rollDice() {
   try {
-    // Loop to fetch each die from backend
     for (let i = 1; i <= 5; i++) {
       const response = await fetch(
         "https://web-dice-node-awgqftcadtajdyhz.canadacentral-01.azurewebsites.net/roll"
@@ -15,14 +14,13 @@ async function rollDice() {
 
       const data = await response.json();
 
-      // Update the corresponding dice input box
       document.getElementById(`die${i}`).value = data.dice;
 
-      // Log each die roll
       console.log(`Die ${i} rolled: ${data.dice}`);
     }
   } catch (err) {
     console.error("Error fetching dice:", err);
+
     for (let i = 1; i <= 5; i++) {
       document.getElementById(`die${i}`).value = "ERR";
     }
@@ -32,6 +30,7 @@ async function rollDice() {
 // Function to wake up backend
 async function wakeUpBackend() {
   console.log("Trying to wake up backend...");
+
   try {
     const response = await fetch(
       "https://web-dice-node-awgqftcadtajdyhz.canadacentral-01.azurewebsites.net/roll"
@@ -47,13 +46,12 @@ async function wakeUpBackend() {
   }
 }
 
-// Wake up backend immediately when page loads
+// Wake backend when page loads
 wakeUpBackend();
 
-// Allow pressing Enter to roll dice
+// Allow Enter key to roll dice
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") rollDice();
+  if (e.key === "Enter") {
+    rollDice();
+  }
 });
-
-// Attach event listener to Roll Dice button
-document.getElementById("rollButton").addEventListener("click", rollDice);
