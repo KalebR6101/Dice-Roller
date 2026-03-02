@@ -29,13 +29,17 @@ async function rollDice() {
 // Attach event listener to the Roll Dice button
 document.getElementById("rollButton").addEventListener("click", rollDice);
 
-// Optional: Wake up the backend on page load
 async function wakeUpBackend() {
   try {
-    await fetch(
+    const response = await fetch(
       "https://web-dice-node-awgqftcadtajdyhz.canadacentral-01.azurewebsites.net/roll"
     );
-    console.log("Backend woken up!");
+
+    if (response.ok) {
+      console.log("Backend woken up successfully!");
+    } else {
+      console.warn("Backend wakeup fetch returned status:", response.status);
+    }
   } catch (err) {
     console.error("Backend wake-up failed:", err);
   }
